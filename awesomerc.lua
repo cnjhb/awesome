@@ -329,11 +329,11 @@ awful.keyboard.append_global_keybindings({
 -- @DOC_NUMBER_KEYBINDINGS@
 
 awful.keyboard.append_global_keybindings({
+    group = "tag",
     awful.key {
         modifiers   = { modkey },
         keygroup    = "numrow",
         description = "only view tag",
-        group       = "tag",
         on_press    = function (index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
@@ -346,7 +346,6 @@ awful.keyboard.append_global_keybindings({
         modifiers   = { modkey, "Control" },
         keygroup    = "numrow",
         description = "toggle tag",
-        group       = "tag",
         on_press    = function (index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
@@ -359,7 +358,6 @@ awful.keyboard.append_global_keybindings({
         modifiers = { modkey, "Shift" },
         keygroup    = "numrow",
         description = "move focused client to tag",
-        group       = "tag",
         on_press    = function (index)
             if client.focus then
                 local tag = client.focus.screen.tags[index]
@@ -373,7 +371,6 @@ awful.keyboard.append_global_keybindings({
         modifiers   = { modkey, "Control", "Shift" },
         keygroup    = "numrow",
         description = "toggle focused client on tag",
-        group       = "tag",
         on_press    = function (index)
             if client.focus then
                 local tag = client.focus.screen.tags[index]
@@ -387,7 +384,6 @@ awful.keyboard.append_global_keybindings({
         modifiers   = { modkey },
         keygroup    = "numpad",
         description = "select layout directly",
-        group       = "layout",
         on_press    = function (index)
             local t = awful.screen.focused().selected_tag
             if t then
@@ -414,49 +410,50 @@ end)
 
 -- @DOC_CLIENT_KEYBINDINGS@
 client.connect_signal("request::default_keybindings", function()
-    awful.keyboard.append_client_keybindings({
+    awful.keyboard.append_client_keybindings{
+            group = "client",
         awful.key({ modkey,           }, "f",
             function (c)
                 c.fullscreen = not c.fullscreen
                 c:raise()
             end,
-            {description = "toggle fullscreen", group = "client"}),
+            {description = "toggle fullscreen"}),
         awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
-                {description = "close", group = "client"}),
+                {description = "close"}),
         awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-                {description = "toggle floating", group = "client"}),
+                {description = "toggle floating"}),
         awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-                {description = "move to master", group = "client"}),
+                {description = "move to master"}),
         awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
-                {description = "move to screen", group = "client"}),
+                {description = "move to screen"}),
         awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-                {description = "toggle keep on top", group = "client"}),
+                {description = "toggle keep on top"}),
         awful.key({ modkey,           }, "n",
             function (c)
                 -- The client currently has the input focus, so it cannot be
                 -- minimized, since minimized clients can't have the focus.
                 c.minimized = true
             end ,
-            {description = "minimize", group = "client"}),
+            {description = "minimize"}),
         awful.key({ modkey,           }, "m",
             function (c)
                 c.maximized = not c.maximized
                 c:raise()
             end ,
-            {description = "(un)maximize", group = "client"}),
+            {description = "(un)maximize"}),
         awful.key({ modkey, "Control" }, "m",
             function (c)
                 c.maximized_vertical = not c.maximized_vertical
                 c:raise()
             end ,
-            {description = "(un)maximize vertically", group = "client"}),
+            {description = "(un)maximize vertically"}),
         awful.key({ modkey, "Shift"   }, "m",
             function (c)
                 c.maximized_horizontal = not c.maximized_horizontal
                 c:raise()
             end ,
-            {description = "(un)maximize horizontally", group = "client"}),
-    })
+            {description = "(un)maximize horizontally"}),
+    }
 end)
 
 -- }}}
